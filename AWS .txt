@@ -1,4 +1,4 @@
-AWS
+AWS Notes
 Vid 1:
 -----------------Abhi Access key--------------------
 User name	Password	Console sign-in URL
