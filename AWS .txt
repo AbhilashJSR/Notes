@@ -1,0 +1,751 @@
+AWS
+Vid 1:
+-----------------Abhi Access key--------------------
+User name	Password	Console sign-in URL
+Abhi		kGF0c3+u	https://266735830630.signin.aws.amazon.com/console
+
+
+AWS --> EC2, EBS  --- cost 
+Microsoft  -> Vertual machines
+Google --> Compute engines
+
+Cloud services:- on-premises, Infrstructure as a services, platform as services, software as services.
+In this, we maintain servers and ec2 machines and spin of a server.
+-------------------
+Regions: AWS region is a saperate geographic area were we cluster data center.
+
+What is Availability zone?
+-> Each AWS region is completely indepentdent.
+Each AWs region consists of multiple, isolated, and physically separate AZ's within a geographic area.
+
+Availability Zone: Green circles define upcoming zones.
+Numbers represents the availability zone.
+
+AWS never disclose availablity zones in particular locations.
+-----------------------------------------------
+
+IAM : Identity and Access Management.
+--> is a service provided by AWS that allows you to manage users, groups, and permissions to securely 
+	control access to your AWS resources
+ How IAM Works:
+		-Creating a User:
+		-Assigning Permissions:
+		-IAM Role for EC2
+		-Temporary Access with Roles: IAM roles can be used for temporary access. 
+		For example, a user in another AWS account can assume a role to access your resources for a limited time.
+		
+CLI -> Command Line Interface
+___________________________________________________________________
+Vid 2:
+
+Cloud Watch: Cloud watch is a monitoring tool which monitors all those services gather those matrics and keeps it within
+			service.
+All AWS instances has some metrics.
+	-Monitoring of resources.
+	-Monitoring of Applications.
+
+Using instance ID we can get matrics details.
+	Metrics --> metrics are data about the performance of your systems.
+	2 types: 
+		Basic Monitoring: Basic monitoring which polls for every 5 min.
+		Detailed Monitoring:  ability to collect more frequent and granular metrics for your AWS resources, specifically for services like Amazon EC2 instances.
+	
+Alarm --> Cloudwatch alarms feature allow us to watch CloudWatch metrics and to recieve notifications when the metrics
+		fall outside of the levels that has been configured.
+	Ex: if CPU usage goes beyond static threshold alrm goes to alarm state.
+ 
+ 3 states in CW alarm:
+	-Alarm state
+	-Insufficient
+	-OK state.
+
+Cloud Trial: AWS CloudTrail is a service that enables governance, compliance, and operational and risk auditing 
+		of your AWS account. 
+		In Cloud trial we can check who deletes or modifies the file.
+
+SNS --> Simple Notification Service
+	
+(0:58:00) Configure video link----
+___________________________________________________________________
+Vid 3:
+SNS uses another service called SQS (Simple Queue Service) to store the message in queue format.
+Queue  --> Stores  the messages and disperse them for the developers using queue name.
+	FIFO Queue  -> First in first out the messages. Order of delivery of messages. and keeps the messages in order.
+		Subscription protocol: SQS.
+	Standard Queue -->
+		Best efforts messaing order.
+		At-least once message delivery.
+		Highest throughout the publishers/secound.
+We can trigger Lambda function using SNS.
+----------------------------------------------
+KMS: Key Management Service.
+	Customer Manage keys: Used for ecrypted the data.
+	AWS managed keys: it generates the master key to encrypt data.
+
+AWS Secrets: AWS Secrets Manager is a service designed to securely store, manage, and retrieve secrets such
+			as database credentials, API keys, passwords, and other sensitive information.
+	UN:
+	Password:
+___________________________________________________
+Vid 4:
+SQS Simple Queue Service:  is a fully managed message queuing service provided by AWS that allows you to decouple 
+							and scale microservices, distributed systems, and serverless applications.
+Key features of SQS:
+	-Visibility Timeout: sets the length of time that a message recieved from queue will not be visible to the other
+		other message consumers.
+	-Delivery delay:  a specialized implementation of a blocking queue that orders elements based on their delay time.
+	-DLQ Dead letter Queue: If a message cant be consumed successfully, you can send it to a dead letter queue.
+		DLQ lets u isolate problamatic messages to determine why they are failing.
+		When u designate queue to be a source queue, a DLQ is not created automatically.
+___________________________________________________________________
+Vid 5:
+
+VPC  --> is requierd to launch or host ec2 instances.
+Spin up instance: Spinning up an instance" refers to the process of launching or starting a new virtual machine (VM),
+				also known as an instance, in a cloud computing environment like AWS, it refers to launching an EC2 instance.
+
+		We cannot spin up ec2 instance without having a network. Ip address i must.	
+
+CIDR Range (Classless Inter Domain Routing) --> It is number of IP addresses that is required for a network.
+	2^32-n -> These many IP addreses can be assigned in Ipv4. (normally used) 256 ip address.
+	2^128-n  -> These many IP addreses can be assigned in Ipv6.
+
+Pulic Subnet: Resources residing in public subnet has access over the internet.
+	Ip adress range 10.0.0.0 - 10.0.0.127 (128)
+	It has both Public and Private IP.
+Private Subnet: Resources residing in the private subnet does not have the access over the internet.
+	Ip address range 10.0.0.128 - 10.0.0.255
+	Used to communicate 
+	This does not have public Ip.
+IGW -Internet Gateway --> is a scalable, redundant, and highly available component that allows communication between 
+	instances in a Virtual Private Cloud (VPC) and the internet. It is essentially a bridge between your private network 
+	(VPC) and the public internet.
+
+RT (Routing Table) --> iT IS USED TO CONNECT PUBLIC AND PRIVATE INSTANCES.
+	It is connected to IGW.
+NAT gateway (Network Address Translation) -> Used in public subnet to spin up instance.
+
+--(43:40 creating VPC)--
+
+1-4 and last IP is reserved.
+
+___________________________________________________________________
+Vid 6:
+
+VPC Quota or VPC limitations:
+1. 5 VPC per region
+2. 5 IGW per region
+3. Subnet per VPC is 200
+4. IPv4 CIDR blocks per VPC 4
+5. Elastic IP addresses per region 5
+6. Internet gateways per region 5
+7. Nat gateways per Availability Zone 5
+8. Network ACLs per VPC 200
+9. Rules per network ACL 200.
+
+VPC Peering:  A VPC peering connection is a networking connection between 2 VPCs that enables u to route traffic between them using 
+			  private IPv4 addresses or IPv6 addresses.
+			  Instances in either VPCs can communicate with each other as if they are within teh same network.
+			  The VPCs can be in different regions.
+-------------------------------------------------------------
+NACL and Security Groups: 
+ MSSQL port --> 1433
+ HTTP port --> 80
+ HTTPs port --> 443
+ SSH -->22
+	-A Network Access Control List (NACL) is a stateless firewall that controls inbound and outbound traffic at the subnet
+	level. It allows or denies traffic to and from subnets in your VPC.
+	-A Security Group is a stateful firewall that controls inbound and outbound traffic at the instance level (i.e., for EC2
+	instances, RDS instances, Lambda functions, etc.). 
+	
+http://composer.com
+https://composer
+tableau:9015 
+
+What is Statefull Set and Stateless in Security groups aws.
+-> A Stateful system is one that remembers the state of network connections and automatically allows return traffic for an allowed request.
+  -A Stateless system does not remember the state of network connections. Each request is treated independently, and responses are not automatically allowed.
+	
+Security Groups considered as Satetfull
+Network ACL is considered as stateless.
+------------------------------
+EC2(Elastic Cloud Computing) --> ) is a web service offered by Amazon Web Services (AWS) that allows users to rent 
+				virtual servers (known as instances) in the cloud. EC2 instances can be used to run applications, 
+				host websites, process data, or perform other computing tasks.
+
+	VCP EP -->
+	Transit gateway -->
+	Customer gateway --> 
+	Vp gateway --> 
+	site-to site VPN connection -->
+	Client VPN end points -->
+
+___________________________________________________________________
+Vid 7:
+
+AMI (Amazon Machine Image) --> OS + Software packages pre installed.
+(9:40 create ami)
+	An Amazon Machine Image (AMI) is a pre-configured virtual machine image used to create EC2 instances in AWS. 
+	It contains the operating system (OS), application server, and any additional software that your application might
+	need to run.
+	
+c5.2xlarge --> is a type of instance (like t1.micro) which support powerfull process with high capacity RAM.
+				(8cores of CPU, 16gb or RAM)
+				
+t2.2xlarge  --> used for developers environment.
+------------------------------------
+Types of instances:
+		T2, c4m m4, c5...
+---------------------------------
+Types of Purchasing Options:
+	On-Demand:
+			Most flexible purchasing option
+			Most expenssive
+			
+	Reserved Instances (RI)
+				Can reserve instances for 3years at same price
+				
+	Spot Instances
+				Bidding type.
+	Dedicated Host
+				A physical machines will be allocated.
+------------------------------
+Bastion Host --> A Bastion Host is a special-purpose EC2 instance that acts as a secure entry point to access private 
+			networks within an AWS VPC. It's used to securely connect to instances in a private subnet that aren't directly 
+			accessible from the public internet. 
+_______________________________________________________
+Vid 8:
+
+EBS (Elastic Block Storage) --> Hardisk. Amazon Elastic Block Store (EBS) is a scalable and high-performance block storage 
+							service provided by AWS. It is primarily used for storing persistent data that can be attached 
+							to Amazon EC2 instances. 
+	Create Volume ->
+	Attaching the volume ->
+	The Datas are backed up in S3 buckets.
+Snapshot EBS --> You can back up data on ur amazon EBS volumes to amazon S3 by taking point-in-time snapshots. 
+				-Snapshots are incremental backups.
+				
+Once th disk has been attached it needs to be mounted to instance.
+(20:25 creating volume)	
+  Steps followed for disk:
+	-Unmount Disk
+	-Detach Disk
+	-Attach to new instance.
+	-Mount the volume.
+
+Create Volume: 
+step1: Navigate to volumes and click on create colume.
+Step 2: after creation go to volumes section and select created volume and attach to required instance.
+Step 3: select /dev/sdf
+Stpe: df -h
+	lsblk 
+	file 
+---------------------------------------	
+Steps for create file:
+		-unmount disk
+		-delete the volume
+		-create new volume out of snapshots
+		-attache volume
+		-mount volume
+		-check the files using ls
+		
+(40:30 creating snapshot)
+
+What is Life cycle manager?*
+-> AWS Data Lifecycle Manager (DLM) is a fully managed service that automates the process of creating, retaining, and
+  deleting Amazon Elastic Block Store (EBS) snapshots. It helps you automate the management of EBS volume snapshots, 
+  reducing the need for manual snapshot management. 
+
+EFS Elastic File Storage? 
+-> Amazon EFS (Elastic File System) is a fully managed, scalable, and elastic network file system that can be accessed by
+   multiple EC2 instances, containers, and on-premises servers. It is designed to provide a simple, scalable, and shared file
+   storage solution for cloud-native applications.
+ -EFS can be mounted on EC2 instances running in different Availability Zones (AZs) within the same region, providing a 
+  highly available and durable file storage solution
+Key Features of Amazon EFS:
+	-Scalability
+	-Elasticity
+	-Shared Storage
+	-Fully Managed
+	-High Availability and Durability:
+	-Data Encryption
+
+*What is difference btw S3, EBS, and EFS? *
+>S3:> Use Case: Ideal for storing large amounts of unstructured data (like media files, backups, archives, and logs).
+		-Scalability: Unlimited storage, automatically scales as needed.
+		-Access: HTTP/HTTPS via S3 API	
+		-Type of Storage: Object Storage.
+>EBS:>Use Case: Designed for use with EC2 instances (virtual servers). Ideal for data that requires frequent updates and 
+	low-latency access, such as databases, file systems, and application storage.
+	-Scalability: Scalable up to several TBs of data.
+	-Access: Mounted as a block device to EC2 instance	
+	-Type of Storage: Block storage.
+>EFS:> Use Case: Ideal for applications that require a shared file system for multiple EC2 instances or containers, 
+	such as content management systems, home directories, and workloads requiring file-based access.
+	-Scalability: Scales automatically and dynamically, handling petabytes of data.
+	-Access:Mounted over NFS, shared access for multiple EC2 instances
+	-Type of Storage: File Storage.
+
+Difference btw Snapshot and AMI? *
+>AMI: Amazon Machine Image (AMI) --> An AMI is a pre-configured template that contains the operating system, 
+		application server, applications, and all associated configurations that allow you to launch an EC2 instance.
+>Snapshot --> A Snapshot is a backup of an EBS volume (Elastic Block Store). It captures the state of the volume at a
+		specific point in time.
+___________________________________________________________________
+Vid 9:
+Load Balancer --> distributes the load accross the instances or containers or pods or lambda function.
+	SG Security groups
+	Health Condition
+
+ Types of Load Balancer:
+	1. Application load balancer: Mainly used in web applications running http & https protocols.
+	2. Network load balancer: Ultra high performance at low latency rate. and can handle millions of requests per second.
+	3. Classic Load Balancer: used for applications that were built in existing EC2 classic environment.
+	4. gateway load balancer: 
+	
+Network Load Balancer vs Application Load Balancer:
+	Network Load Balancer (NLB):
+		-It works by routing the IP packets based on the destination IP address and port, without inspecting the content of the data.
+		-NLB handles TCP, UDP, and TLS traffic.
+		-Best for low-latency, high-throughput applications.
+
+	Application Load Balancer (ALB):
+		-Best for HTTP/HTTPS traffic (web applications).
+		-It is ideal for web applications and microservices that require complex routing based on content.
+		-It is used to routes HTTP and HTTPS traffic and can inspect the content of the request, such as URL, headers, and query parameters.
+		
+(Load balancer 24:08)	
+
+SSC (Self Signed Certificate) --> A Self-Signed Certificate (SSC) is an SSL/TLS certificate that is signed by the same 
+	entity that created it, rather than a trusted Certificate Authority (CA). In other words, the certificate is not signed 
+	by an external, recognized third-party authority but by the organization or individual that owns the domain or service.
+
+What is Target Groups?*
+--> In AWS, a Target Group is a logical grouping of resources that you want to route traffic to, typically in the context 
+   of load balancing. When using services like Elastic Load Balancer (ELB), the traffic is distributed to the targets 
+   (such as EC2 instances, IP addresses, or Lambda functions) in a Target Group based on specific rules.
+
+*(AWS Certificate Manager (Inter Q)--> Yes, worked on AWS Certificate.)
+--------------------------------------
+Auto Scaling --> AWS Auto Scaling is a powerful feature that ensures your application maintains optimal performance and 
+			cost efficiency by automatically adjusting the number of EC2 instances in response to changes in demand. 
+			It improves availability, reliability, and cost optimization, making it an essential service for dynamic workloads. 
+
+	-Horizontal Scaling ->  It allows organizations to handle large volumes of traffic, ensure high availability, and scale 
+						infrastructure elastically as demand increases.  
+	-Vertical Scaling -> Vertical scaling (scaling up) is a straightforward approach for handling increased demand by upgrading 
+		the hardware of a single instance. It works well for certain workloads like monolithic applications, databases, and 
+		legacy systems. However, it has limitations in terms of capacity, fault tolerance, and cost-efficiency as traffic grows. 
+	
+(1:12:20 scaling)
+
+ What is Launch template and why it is required?*
+--> A Launch Template in AWS simplifies and standardizes the process of launching EC2 instances by providing predefined
+	configurations. It is required for:
+			-Automation and scaling: Especially when used with Auto Scaling groups.
+			-Consistency: To ensure that all instances are launched with the same settings.
+			-Versioning: To track and maintain different configurations over time.
+			-Efficiency: Reduces manual effort and human error when launching EC2 instances
+
+-------------
+IQ: Have u created any Load Balancer?
+--> yes, have created a application load balancer to handle hhtp and https requests.
+-------------------------------------------------------
+___________________________________________________________________
+Vid 10:
+
+Rout 53--> Rout 53 is a domain name server which is mainly used to map the domain name wrt to IP addreses or host name.
+		-Basically we can purchase a domain name and map it.
+
+Hosted Zone-> After purchasiing domain name we can host.
+
+What is TTL --> Time To Leave. 
+		Till 300 seconds cache remains in web browser.
+		TTL is mandatory for each DNS record.
+
+Latency Routing policy --> Use when u have resources in multiple AWS region, and you want to route traffic to the 
+region that provides the best latency.
+------------------------------------
+In S3 resource are called as buckets.
+In EC resource are called as instance.
+-------------------------------------
+IQ - Where have u used buckets?
+> the Microservices used to dump some excel files like bucket.
+We are using buckets in order to store some files.
+------------------------------------
+
+S3 storage classes:
+	-Standard
+	-Reduced redundency Storage
+	-Infrequent Access.
+	
+S3 -> Amazon S3 has a simple web services interface that u can use to store and retrieve amount of data, at any time, 
+	from anywhere on the web.
+	-Single operation upload
+			A single operation upload can upload the file up to 5GB in size.
+	-Upload object in parts
+			It allows us to upload data upto 5TB.
+			You can use multipart upload for the objects from 5MB to 5TB.	
+
+S3 Life Cycle Policy --> An object life cycle policy is a set of rules that automate migration of the object storage class
+to different storage class.
+___________________________________________________________________
+Vid 11:
+
+Cloud Management --> Create and Manage Resources with templates.
+
+Cloud Formation --> is a service were we are using the service in order to set up resources.
+
+Template -> template is snippet of code written in YAML or JSON format 
+Stack -> Once the template is submitted to cloud formation it creates a stack in order to create the resources.
+
+ What is Cloud Formation stack and write basic cloud fomation template.*
+--> A CloudFormation Stack is a collection of AWS resources that you manage as a single unit.When you create a stack, 
+		CloudFormation provisions and manages all the resources specified in the template.
+	CloudFormation is a powerful tool for automating and managing AWS infrastructure in a consistent, repeatable way using 
+	templates. By creating stacks, you can define your entire infrastructure as code and manage its lifecycle (creation, 
+	updates, and deletion) with a simple and declarative process.
+
+(IQ - Terraform)
+-> Terraform is an open-source Infrastructure as Code (IaC) tool developed by HashiCorp.
+	Terraform enables developers and operations teams to manage infrastructure resources (e.g., virtual machines,
+	networking, databases) in a declarative way.
+	
+--------------------
+Lambda -> Lambda is a serverless platform.
+	AWS Lambda is a highly flexible, cost-effective, and scalable solution for running code without the need 
+	to manage servers. It enables developers to build event-driven applications that respond to changes in data 
+	or other AWS services.
+
+	Key Features of AWS Lambda:
+	-Serverless Execution:
+	-Event-Driven
+	-Sacalability
+	-Language Supported
+	-Integration with Other AWS Services
+	-Security
+	-Execution Environment
+	-Versioning and Aliases
+	
+-----------------------
+*What is trigger and destination?
+--> A TRIGGER is an event or condition that initiates (or "triggers") a specific action or workflow.
+	A DESTINATION refers to the target service or resource that receives the output or result of a triggered action. 
+
+
+RDS -> in which we can create different kinds of databases. 
+Dynamo DB->
+
+Cognito Service -> Mainly provides authentication and user management for your application.
+	Like- signup
+		  signin
+		  forgot or change password 
+		  multifactor authentication
+		  
+	2 types Cognito:
+			1. Cognito user pool
+			2. Cognito Identity
+___________________________________________________
+Vid 12:
+(create database 01:10)		  
+*(IQ - what RDS? have you worked on RDS?)
+*What are the different relation databases that are supported in AWS?
+
+Amazon DynamoDB --> to create databases.
+
+Cognito --> It mainly provides authentication authorization and user management for you applications.
+(IQ - Have you worked on Amazon cognito: yes, have worked on amazon cognito to help developers in order to create the 
+user code which helps in auhtnetication)
+
+	-Cognito User pool -> used to authenticate users for ur applications.
+	-Cognito identity Pool --> It is used to authorize users to use various AWS services.
+-----------------------
+	
+(51:40 Create a web app - Elastic Beanstalk)	
+Beanstalk --> Amazon Elastic Beanstalk is an easy-to-use service deploying and scaling web applications and services developed
+			with Java, .NET, PHP, NodeJS, Python, Ruby, Go, and Docker on familiar servers such as apache,Nginx, passenger
+			and IISC.
+			Elastic Beanstalk simplifies deploying, managing AWS applications, provisioning resources, monitoring health, creating environments.
+	How it works:
+		We just upload the code and Elastic beanstalk automatically handles the deployment, from capacity provisioning,
+		load balancing, and automate scaling.
+		
+(IQ what is the difference btw EBS and Lmbda?)
+--------------------------------
+
+Devops Tools:- 
+	AWS Code Commit
+	AWS Deplay
+	AWS Code Build
+	AWS Code Pipeline
+		
+	AWS Codecommit -> it is a repository were we maintai source code. It similar to Github.
+
+	Code Build -> mainly used to build application code. It has 3 stage,
+		Pre build -> we do docker login in order to push the artifacts.
+		Build -> build the docker image.
+		Post Build -> push the artifacts to the repository.
+
+	Code Deploy --> AWS CodeDeploy is a fully managed deployment service provided by Amazon Web Services (AWS) that
+				automates the process of deploying applications to various compute services
+	
+	Code Pipeline -> it is a combination of all thngs.
+
+
+SSO -Single Sign 
+
+ECR: Elastic Container Registry --> 
+
+ECS: Elastic Conatiner Service -->
+
+EKS Elastic Kubernetes Service --> 
+
+------------------------------------------
+-Difference btw on premise machines and cloud environment.
+--> On-Premise Machines:
+		-The hardware and infrastructure are owned and maintained by the organization itself.
+		-The organization is responsible for purchasing, setting up, managing, and maintaining
+			the physical machines, servers, networking, and storage.
+		-Capital Expenditure (CapEx): Initial costs for purchasing hardware, software licenses, and setting up the
+			infrastructure.
+		-Less flexible, requires manual upgrades
+		-Limited to local or VPN access	
+	Cloud Environment:
+		-The hardware and infrastructure are provided and managed by a third-party cloud service provider 
+			(e.g., AWS, Microsoft Azure, Google Cloud).
+		-The organization rents the resources rather than owning them, and the cloud provider manages and maintains
+			the physical infrastructure.
+		-Operational Expenditure (OpEx): Pay-as-you-go model or subscription-based pricing for resources such as storage, 
+				computing power, and networking.
+				
+		-Access to cutting-edge technologies
+		-Accessible globally with internet access
+
+Conclusion:
+On-premise is ideal for organizations that need full control over their infrastructure, data, and security, or have specific 
+	compliance needs that require local management.
+Cloud environments are best for organizations that need flexibility, scalability, cost efficiency, and easier access to
+	modern tools and technologies without the burden of infrastructure management.
+------------------
+
+What is spin up instance?
+-> is a term commonly used in cloud computing to refer to the process of creating or launching a new virtual machine (VM)
+	or virtual server (instance) in a cloud environment. When you "spin up" an instance, you are provisioning a new 
+	computing resource in the cloud that will run applications, services, or workloads.
+	
+what is CLi?
+-->CLI stands for Command-Line Interface, which is a text-based interface used for interacting with software and operating 
+	systems. Instead of using a graphical user interface (GUI) with buttons and icons, a CLI allows users to type commands 
+	to perform specific tasks.
+	
+What is regions and AZs.
+--> A Region is a geographic area that contains one or more Availability Zones.
+An Availability Zone (AZ) is a physically separate data center or group of data centers within a specific region. 
+
+What is default retention period?
+--> The default retention period refers to the length of time that data, logs, backups, or other resources are
+	stored before they are automatically deleted, archived, or no longer accessible by the system.  
+Default 4 days and retention period ranges from 60sec to max 14 days.
+
+what is maximum size.
+
+Explain SQS?
+--> SQS is a simple queue service in which we can use this particular queues in order to where we have something called as a producer and a consumer.
+which will be continously generating messages and the consumer will be consuming those messages, in btw those producer and consumers we can 
+create a queue.
+
+Explain project architecture?
+there was a microservice which was continously generating some packets of data, so those data that needs to be consumed by the
+other microservice applications. In order to do that we have craeted a queue called the test queue.
+This is used by the developers in order to push the messages in to the queue and similarly the message will be consumed out of the 
+particular queue.
+
+What is max size payload in a queue?
+--> Maximum Payload Size: The maximum size of a message in SQS is 256 KB.
+	This includes both the message body and any metadata.
+	If your message exceeds 256 KB, you would need to split the message or use alternative solutions like Amazon S3 to
+		store the payload and include a reference to it in the SQS message.
+A message can be sent with max paylaod of 2gb that with java card library.
+
+What is dead letter queue?
+
+What is SSE and CSE?
+
+what is s3 bucket?
+--> An S3 bucket refers to a storage container in Amazon Simple Storage Service (Amazon S3), a highly scalable and 
+		durable object storage service provided by Amazon Web Services (AWS). 
+	S3 is used to store and manage any amount of data, such as files, backups, logs, images, videos, and more. 
+	S3 buckets are the basic containers used for organizing and storing objects (data files) within the service.
+
+What is edge location?
+--> An Edge Location is a part of AWS's content delivery network, CloudFront, and is used to cache content closer 
+	to end users around the world. These locations help reduce latency, improve website and content delivery speeds, 
+	and enhance the overall user experience by serving data from nearby geographic locations.
+
+3 types of policies
+-> Identity-Based Policies (IAM Policies)
+	Resource-Based Policies
+	Permissions Boundaries
+	
+6 SQS configuration?
+	1. Queue Type (Standard vs. FIFO)
+	2. Message Retention Period
+	3. Visibility Timeout
+	4. Dead Letter Queue (DLQ)
+	5. Message Delay
+	6. Queue Access Control (IAM Policies & Resource Policies)
+
+What are the different relation databases that are supported in AWS?
+-> Amazon RDS (Relational Database Service)
+	Amazon RDS is a fully managed relational database service that supports several database engines
+		MySQL
+		PostgreSQL
+		MariaDB
+		Oracle
+		Microsoft SQL Server
+
+
+Role: A set of permissions that can be assumed by a user, service, or application. It allows entities 
+		to temporarily inherit the permissions defined in the attached policies.
+Policy: A document (written in JSON) that defines what actions are allowed or denied
+		on specific AWS resources. Policies can be attached to roles, users, or groups.
+		
+		
+		
+		Health checks:
+		System status checks: will chcek the monitor aws access. Will check ntw, hardwares.
+		instance ctatus check: 
+		
+		AMI
+		Resoitce access manager
+--------------------------------------------		
+		
+Wat is routing policies?
+--> Routing Policies in AWS Route 53 In Amazon Route 53, routing policies define how traffic is directed to different endpoints
+ based on various conditions, such as the geographic location of users, weighted distribution of traffic, or failover scenarios. 
+	1. Simple Routing Policy
+	2. Weighted Routing Policy
+	3. Latency-Based Routing Policy
+	4. Geolocation Routing Policy
+	5. Geoproximity Routing Policy
+	6. Failover Routing Policy
+	7. Multi-Value Answer Routing Policy
+--------------------	
+		What is Assume role?
+-->  is an API operation provided by AWS Identity and Access Management (IAM) that allows one IAM role to temporarily take on the 
+	permissions of another IAM role.	
+----------------------
+3-Tier Architecture in AWS
+--> A 3-tier architecture is a software design pattern that divides the application into three logical layers or "tiers" — typically, 
+	the presentation layer, the logic layer, and the data layer. 	
+	
+	1. Presentation Layer (Frontend):
+		This is the user interface and is responsible for providing users with access to the application.
+		It could be a web or mobile application that interacts with the backend systems via APIs or HTTP requests.
+	2. Logic Layer (Application Layer):
+		This layer contains the business logic and the backend application logic that handles requests from the presentation layer, processes them, and communicates with the data layer.
+		It could be a RESTful API, microservices, or serverless functions.
+	3. Data Layer (Database Layer):
+		This layer contains the data storage and is responsible for persistent storage of the application data.
+		It handles tasks like querying, storing, and managing databases and other data stores.
+--------------------------
+What are types Instance?
+. General Purpose Instances
+These instances provide a balance of compute, memory, and networking resources and are suitable for a variety of diversified workloads.
+
+Instance Types:
+t4g, t3, t3a, t2 (Burstable Performance Instances)
+
+ Compute Optimized Instances
+These instances are ideal for compute-bound applications that require high-performance processors.
+
+Instance Types:
+c6g, c5, c5a, c5n, c4
+
+Memory Optimized Instances
+Memory-optimized instances are designed for workloads that require large amounts of memory and are ideal for high-performance databases, in-memory caches, and real-time big data analytics.
+
+Instance Types:
+r6g, r5, r5a, r5n, r4 (Memory optimized)
+
+Storage Optimized Instances
+These instances are designed for workloads that require high, sequential read and write access to very large data sets.
+
+Instance Types:
+i3, i3en (Storage optimized
+
+---------------------------
+
+Load Balancer and Auto scaling in instance:
+
+ pwd
+/home/ec2-user
+[ec2-user@ip-172-31-9-150 ~]$ sudo su -
+Last login: Fri Mar 21 05:52:15 UTC 2025 on pts/0
+[root@ip-172-31-9-150 ~]# history
+    1  pwd
+    2  yum update
+    3  yum update -y
+    4  yum install httpd -y
+    5  cd /var/www/html
+    6  pwd
+    7  ls
+    8  echo "xpulse" > index.html
+    9  cat index.html
+   10  systemctl enable httpd
+   11  systemctl start httpd
+
+-------------------------------------
+
+what is Disaster recovery mechanism in aws?
+--> Disaster Recovery (DR) in AWS refers to the strategies, processes, and tools used to recover from catastrophic events, such as hardware failures, network outages, or other disruptions.
+
+key disaster recovery mechanisms are:
+	1. AWS Regions and Availability Zones (AZs)
+	2. Backup and Restore (Simple and Effective)
+	3. Pilot Light Disaster Recovery
+	4. Warm Standby Disaster Recovery
+	5. Multi-Region and Multi-AZ Architecture
+	6. Backup and Restore Strategy with Amazon Glacier
+	7. Cross-Region Replication and Cross-Region Failover
+	8. AWS Elastic Load Balancing and Auto Scaling
+	9. Amazon Route 53 for DNS Failover
+	10. CloudEndure Disaster Recovery
+	11. Amazon CloudWatch for Monitoring
+	12. AWS Elastic File System (EFS) for Data Recovery
+------------------
+
+Types of s3 in aws
+
+--> S3 Standard:
+	S3 Express One Zone:
+	S3 Glacier: Designed for long-term archival storage at a very low cost, with different retrieval speeds depending on the 
+		specific Glacier storage class. 
+--------------
+
+what is static webpage
+-> a web page whose content is fixed and delivered to the user exactly as it's stored on the server, meaning 
+	it doesn't change based on user interaction or server-side processing.
+--------------------	
+Lambda vs Elastic Beanstalk.
+-> EBS:
+	 A Platform as a Service (PaaS) that simplifies the deployment and management of web applications and services on AWS. 
+	  Ideal for deploying full-fledged web applications, services, and APIs. 
+	  Provides a degree of control over the environment, allowing you to configure and customize the stack using configuration files. 
+	  Supports a wide range of programming languages and frameworks. 
+Lambda: A serverless compute service that lets you run code without provisioning or managing servers. 
+	Suitable for event-driven functions, microservices, and APIs. 
+	You pay only for the compute time your functions use, and there's a free tier. 
+	Processing images in S3, sending notifications based on events, or building APIs. 
+----------------
+what is s3 bucket versioning
+-> a feature that allows you to keep multiple versions of an object in the same bucket, enabling data recovery and 
+compliance by preserving, retrieving, and restoring every version of every object stored in your S3 bucket. 
+--------------------------
+
+
+
+
+
+
+
