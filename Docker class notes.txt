@@ -1,0 +1,592 @@
+Docker
+
+Vid 1:
+Docker: Docker is an open-source platform that allows developers to automate the deployment, 
+		scaling, and management of applications inside lightweight, portable containers.
+		-Docker is tool which comes under containerizaton technology.
+Containers:  Containers are isolated environments that package an application and its dependencies (like libraries, 
+			configurations, and binaries), so it can run consistently across different environments, such as development,
+			testing, and production, regardless of the underlying hardware or operating system.
+
+Key concepts in Docker:
+		Container: A self-contained unit that includes the application and all of its dependencies, enabling it to run
+					consistently in any environment.
+		Image: A read-only template used to create containers. It includes everything needed to run an application—code, 
+				libraries, environment variables, and configuration files.
+		Dockerfile: A text file that contains instructions for building a Docker image. It typically includes commands 
+					like copying files, installing software packages, and setting environment variables.
+		Docker Engine: The runtime that runs and manages containers. It can be installed on various operating systems and 
+					is responsible for creating, starting, stopping, and managing containers.
+		Docker Hub: A cloud-based repository for sharing Docker images. It’s a public registry where you can find images 
+				for many popular software tools and frameworks.
+
+Containerazation technology -> Containerization is a technology that allows applications and their dependencies to be bundled
+							together in a self-contained unit, called a container.
+virtualization container: Running a OS on top of another OS.
+						  Like VMware, EC2.
+
+Hypervisor --> We can run n number os of another OS.
+			A hypervisor is a software or hardware-based virtualization platform that allows multiple operating systems (OS)
+			to run simultaneously on a host machine. It acts as an intermediary between the hardware and the virtual machines 
+			(VMs), allocating resources.	
+
+2 types of Virtualization : HVM (Hardware Virtual Machines) and PV (Para Virtaul)
+				HVM -->HVM allows virtual machines (VMs) to have full access to the underlying hardware resources with minimal
+						intervention from the host OS.
+					In HVM, the guest OS runs as if it were on physical hardware, without any modification. It utilizes
+						hardware-assisted virtualization (if available) to improve performance.
+				PV --> In paravirtualization, the guest OS is modified to be aware of the virtualization and communicates
+						directly with the hypervisor.  
+												
+
+IQ what is Zombie proceess -->
+-> A Zombie process in Docker is a process that has finished executing but still exists in the process table because its 
+	parent process has not collected its exit status.
+
+	Background process
+	Foreground Process
+
+Running
+Stopped
+Sleeping
+Zombie
+
+Paused
+hibernate
+
+Process Management --> process management in Docker involves controlling the lifecycle of containers and processes, ensuring proper isolation, monitoring, restarting when necessary, and managing resources effectively. This is vital for maintaining stable, high-performance containerized applications.
+	Key Aspects of Process Management:
+		1.Container Lifecycle Management
+		2. PID (Process ID) Namespace
+		3. Running Multiple Processes in a Container
+		4. Monitoring and Restarting Processes
+		5. Container Logs
+		6. Resource Limits
+		7. Handling Signals
+		8. Docker Process Inspection
+		
+(1:47 Install Docker Desktop)
+
+Difference btw Virtaul Machines and Containers.
+
+__________________________________________________________
+
+Vid 2:
+
+(19:10 ubuntu install)
+
+Docker Hub --->
+
+Registry - Group of repositories are called registry.
+			Registry is a collection of n number of docker repositories.
+			
+List docker: 
+	'docker images' 
+	'docker image ls'
+
+Download or pull images from docker hub. 
+		'docker pull <repo>:<tag>' 
+		(note: if we dont provide <tag> then default tag 'latest' is considered.
+
+To upload/push images to registry:
+		1. Need to prepare image which matches the same name as repo.
+		(image name syntax: <username>/<repo_name>:<tagname>)
+		 'docker tag <old_image> <username>/<repo_name>:<tagname>'
+		 
+		2. To connect to docker hub account
+		'docker login'
+		
+		3. Then push the above tagged image to hub.		
+		'docker push <username>/<repo_name>:<tag>'
+
+Delete docker images in the host machine.
+		'docker rmi <repo>:<tag> 
+		docker image rm <repo>:<tag> 
+
+Delete all images in docker.
+	'docker rmi $(docker images -q)' 
+	'docker images -q | xargs -I{} docker rmi {}
+	
+'docker rm -f ubuntu' --> to 
+ conatiner before creating.
+
+'docker images | awk '{print $3}' -> to print only images 
+'docker image prune -f' --> resource which are not used will be deleted.
+
+Docker link: cd /var/lib/docker/
+__________________________________________________________
+Vid 3:
+Container Topic.
+
+To create a container or run a container --> 'docker run image'  ex: docker run -it jenkins/jenkins.
+
+TTY -> Which enables interaction with OS.
+
+'docker ps' --> gives list of all running containers.
+
+'docker ps -a' --> list stop all running containers.
+
+'docker run -it -d alpine(name)' --> run a container in detach mode.
+
+'docker start --> 'docker start [OPTIONS] CONTAINER [CONTAINER...]'
+
+
+/bin/bash --> main process.  refers to the Bash shell program located in the /bin directory of a Unix-like 
+			operating system, such as Linux or macOS.
+			-The script run in the Bash shell when executed.
+
+
+'docker exec -t' --> to execute any command inside a container.
+
+(IQ: What is the difference btw Atach and EXEC?)
+--> both docker attach and docker exec are used to interact with running containers, but they serve
+	different purposes and work in distinct ways.
+	-The DOCKER ATTACH command is used to attach your terminal to a running container's main process (PID 1)
+			ex: docker attach <container_id_or_name>
+	-The DOCKER EXEC command is used to execute a new command inside an already running container, 
+		independently of the main container process
+			ex: docker exec -it <container_id_or_name> bash
+__________________________________________________________
+
+Vid 4:
+
+3 Tier Architecture General Application ->
+	1. Presentation Layer (Frontend):This is the user interface of the application, where users interact with
+		the system (e.g., web pages, mobile apps).
+	2. Application Layer (Business Logic):This is where the core application logic is processed. It handles 
+		the functionality of the application (e.g., calculations, user authentication, business rules).
+	3. Data Layer (Database): This tier handles data storage, retrieval, and manipulation. It can involve 
+		relational databases (like MySQL, PostgreSQL) or NoSQL databases (like MongoDB).
+-----------
+
+Base Image: We always create an image on top of another image which is called Base Image.
+
+What are the command used to build a docker custom image, Docker file, Docker build, 
+	Basic Command to Build a Docker Image: 'docker build -t <image-name>:<tag> <path-to-dockerfile>'
+
+If there is file by first letter 'D' in caps, then docker will automatically consider the file to build.
+
+'docker run -it -n'  --> to creat a container.
+
+(IQ What is the difference btw a COPY and ADD?)
+-->	In Docker, both COPY and ADD are used to copy files and directories into a Docker image from your local 
+		filesystem or from a URL.
+	Copy: It copies files or directories from your local filesystem into the Docker image.
+		syntax: COPY <source> <destination>
+	Add:
+		Similar to Copy, but it is more powerful and has some additional functionality.
+		It copies files or directories from your local filesystem to the Docker image, just like COPY
+		ADD has the additional ability to handle URLs and automatic extraction of compressed files (like .tar, 
+		.tar.gz, .zip, etc.) into the container.
+		syntax: ADD <source> <destination>
+
+	Both COPY and ADD instructions are used to copy files from host machine to your image and container.
+	Both works in the same format. All sources always calculated from build location, if destination path not there,
+		it will automatically create both working the same.
+__________________________________________________________
+
+Vid 5:
+
+Cli configure:
+	cd .aws
+	ls
+	cat credentails
+	ID / Password anyhting
+---------
+Environment Variable: used to define key-value pairs that can be set inside the container
+	You can set environment variables in a Dockerfile using the ENV instruction. These variables are available 
+		during the build process and in the running container.
+
+Kubernetes ConfigMap vs Secrets?
+
+ To copy --> 'docker cp ./apache.tar.gz ubuntu:/home'   (./apche.tar.gz copies to destination ubuntu:home)
+ 
+ How copy filr from running container --> 'docker cp'
+ 
+*IQ CMD vs Entrypoint?
+-->	Both are used to define the default execution command of the container (the command which will be execute 
+	in the container as main process)
+	-If we use multiple CMD or ENTRYPOINT in the same Dockerfile only the last one will be considered.
+	-If we use both in the same Dockerfile, then the Entrypoint gets the highest priority and the command defined 
+	using CMD will be as Parameters to Entrypoint.
+	
+Difference:-
+	-CMD can be completely overeridden at the runtime (with docker run at the end we can provide the command to override
+	the CMD)
+	-ENTRYPOINT: is the main command that always runs when a container starts.
+			ENV can't be overridden at the runtime but the command passed at the runtime will become parameters to 
+			
+	Entrypoint command defined in Dockerfile.
+	
+Syntax: we can define command in 2 ways:
+		1. shell format 
+			CMD "ls -lrt"
+		2. EXEC command
+			-Always first element is command.
+			-Except first element all the other elements are parameters	to command.
+			CMD ["ls","-lrt"]
+EXPOSE
+		Syntax: EXPOSE <port_number>
+		-used to expose a port to the docker network so that all the other containers in the same docker network 
+		can access it.
+		-EXPOSE the port with in the host machine.
+			
+			
+------------
+Dockerfile_env  (for CMD coammand)
+
+	FROM ubuntu
+	ARG INPUT
+	ENV TEST=$INPUT
+	ENV test1=okoko
+	RUN echo $INPUT
+	RUN apt update && apt install -y $INPUT
+	CMD ["echo","100"]   //this will be executed first coz for CDM command//
+	
+-----------------
+Dockerfile_env  (for Entrypoint coammand)
+
+	FROM ubuntu
+	ENTRYPOINT ["echo","This is my ENTRYPOINT dockerfile"]
+
+To Build: 'docker build -t my-ubuntu -f Dockerfile_env .'
+cat Dockerfile_env
+To Execute: 'docker run -it --rm --name ubuntu my_ubuntu'
+
+-------------------------
+How to override Entrypoint command at RUNTIME?
+--? Yes, using option --entrypoint with docker run command.
+
+Ex: To run from CMD
+
+	FROM ubuntu
+	CMD ["echo","this is CMD"]
+	ENTRYPOINT ["echo","this is ET"]
+	
+-------------------	
+Vid 6:
+Run CMD at Entrypoint:
+
+	FROM
+	RUN mkdir -p /home/run1/; cd/home/run1; touch file.txt
+	RUN touch run1.txt
+	
+ 
+-------------------
+{00:47 python code)
+
+IQ - What test cases have u used.
+
+__________________________________________________________
+
+Vid 7: Networking
+
+What is Port:  a port refers to a communication endpoint through which containers can send and receive network traffic.4
+
+Jenkins uses multiple ports like TCP and UDP.
+How to access a port from EC2 machine.
+
+NGINX --> Port 80
+
+To run NGINX on port: 'docker run -it -d --name my_nginx -p 8080:80 nginx'
+	(Go to browser -> select public ip form EC2 --> enter in url  with port number. ex: IP:8080)
+
+Publish -> It is a process of maping a conatiner/application  port in which the application is running that port we 
+		publish it to a port of the host machine so that we can access that application whic is running inside a conatiner.
+	-Publish = Expose + port mapping to host port.
+
+Expose --> Process of exposing a port to other containers in the same host machine.(inside host machine)
+	-Expose = opening port to all other containers in host machine. 
+---------------------
+Docker Networking --> Docker Networking refers to the way Docker containers communicate with each other and the 
+					outside world. Networking is a fundamental part of containerized applications, as containers 
+					often need to communicate with each other, the host machine, and external services. 
+	Key Concepts in Docker Networking
+		-Docker Network Types: 	
+			a. Bridge Network (default): It creates a private internal network on the host system, and containers can 
+				communicate with each other over this network.
+					'docker network create --driver bridge my-bridge-network'
+			b. Host Network: The host network driver allows containers to share the same network namespace as the host. 
+							In other words, the container uses the host's network interfaces directly.
+						'docker run --network host my-container'
+			c. Overlay Network:The overlay network allows containers running on different Docker hosts to communicate with each other.
+						'docker network create --driver overlay my-overlay-network'
+			d. None Network:
+			
+	-By default docker install one ntw driver called  'Docker Zero'. (ntw type: Brdige ntw)
+	Syntax: 'docker network ls'  --> shows Ntw ID, Name, Driver, Scope.
+
+Any conatiners in same ntw can communicate without any configuration.
+
+'docker network -h'
+
+
+Creat a network --> 'docker network create --d my_bridge'  //(bridge=type of network)//
+To check network --> 'docker network ls'
+to create a conatiner in network --> 'docker run -it -d --name my_nginx4^Cp 8080:80 nginx'
+
+What is difference btw Custom Bridge and Default Bridge?
+--> Custom Brdige: helps us to use the conatiner name  instead of ip address. 
+	It has a default IP table where it maps the IP to its container name again.
+	Advantage: instead of using IP we can use Name to connect.
+__________________________________________________________
+Vid 8: Volume
+
+Why we need Volume?
+-> volumes are a powerful feature used to persist data, share data between containers, and manage the storage of application data. 
+	Key reason:
+			1. Persistence of Data
+			2. Data Sharing Between Containers
+			3. Isolation of Data from the Container’s File System
+			4. Improved Backup, Restore, and Migration
+			5. Performance
+			6. Easier to Manage and Clean Up
+			7. Security and Permissions
+			
+
+Mount volume from Host machine into the Container --> 'docker run -it -d --name my_ubuntu -v /homeubuntu/drive:/home my_ubuntu'
+
+Persistent volume -> volumes that persist data even after a container is stopped, removed, or recreated, which is crucial for 
+					stateful applications like databases or file storage systems.
+
+We can use to connect EBS and EFS for volumes.
+__________________________________________________________
+Vid 9: Multistage
+
+'docker network connect -h' --> for connecting to network.
+
+Mulyistage Build --> multi-stage builds allow you to optimize the process of building and deploying images by using 
+					multiple stages in a Dockerfile. This technique is helpful for reducing the size of the final Docker 
+					image by only including the necessary components needed for running your application, while excluding 
+					build-time dependencies.
+
+Why we need multistage build?
+--> Multi-stage builds in Docker are used to solve several key challenges that arise when building and deploying 
+	applications. The primary reason for using multi-stage builds is to create smaller, more efficient Docker images.
+
+(2:01 git files)
+-------------
+Sample single docker file:
+
+	FROM Jdk
+	Run apt install maven
+	copy source_code (all files, maven files)
+	Run Build 
+--------------
+'Dockerfile Dockerfile_multisatge main.go'  --> To execute from Git file.
+
+
+	
+	
+	
+------------------------------------------
+Difference btw Virtaul Machines and Containers.
+	Virtual machines:
+	-VMs run on a hypervisor (a physical or virtual machine that manages the VMs).
+	-Each VM includes a full operating system (OS), libraries, and the application.
+	-The hypervisor provides hardware-level virtualization for running multiple VMs.
+	-VMs provide stronger isolation as they emulate separate hardware for each machine.
+	-VMs generally have lower performance than containers because of the overhead of running multiple full operating systems.
+	-Suitable for legacy applications that require a specific OS.
+
+
+Containers:
+		-Containers share the host OS kernel but run in isolated user spaces.
+		-Containers do not include a full OS, only the application and its dependencies.
+		-Docker Engine or other container runtimes manage containers at the OS level.
+		-Containers are more lightweight and efficient in terms of resource usage.
+		-Containers have lower resource overhead because they share the host OS kernel and only contain the application and its dependencies
+		-Containers are highly portable and can run consistently across different environments (development, testing, production).
+		-Containers are ideal for microservices architectures, cloud-native applications, and environments requiring fast scaling.
+---------------------------------------
+Kubernetes ConfigMap vs Secrets?
+-->  both ConfigMap and Secret are resources used to manage configuration and sensitive data. While they share some 
+	similarities, they are designed to handle different types of data, with Secrets being meant for sensitive information 
+	(like passwords, tokens, etc.) and ConfigMap for general configuration data.
+ConfigMap:
+		Purpose: Stores non-sensitive configuration data in the form of key-value pairs or entire configuration files.	
+		Use Case: Ideal for storing application configuration, settings, environment variables, or any data that is not sensitive and needs 
+		to be consumed by pods at runtime.
+Secret:
+		Purpose: Stores sensitive data such as passwords, API keys, certificates, and other confidential information.
+		Use Case: Ideal for managing sensitive information that you don’t want exposed in plaintext (such as database 
+		passwords, SSH keys, or tokens).
+---------------------
+what are dangling images in docker?
+-->  dangling images refer to images that are no longer referenced by any containers and are not tagged with a meaningful name. 
+	These images often result from the process of building or updating Docker images, and they take up unnecessary disk space.
+Characteristics of Dangling Images:
+	-No Tag: They don't have any tags associated with them, making them hard to identify or use.
+	-Not in Use: They are not associated with any running or stopped containers, meaning they aren't being actively used in the system.
+	-Created During Build: Dangling images often appear when building new Docker images. Docker may generate intermediate images
+		that are needed temporarily during the build process but don't get used afterward.
+indentify dangling image		syntax: docker images -f "dangling=true"
+Remove dangling image syntax : docker image prune
+
+-----------------
+How to add ELV during runtime in dockers.
+--> To add environment variables (ELV) during runtime in Docker, you can use the -e or --env flag when running a container.
+---------------
+How do you access ECR in dockers? Amazon Elastic Container Registry (ECR)
+-->	Using docker login with URL command
+	you need to authenticate your Docker client with ECR, so that you can pull or push Docker images to/from your Amazon 
+	ECR repository.
+	Steps:
+		1. Authenticate Docker with AWS ECR
+		2. Tagging Docker Image for ECR
+		3. Push Docker Image to ECR
+		4. Pull Docker Image from ECR
+		5. Managing ECR Repository Permissions
+-----------------
+What is docker inspect command?
+--> It is used to inspect all detail (pass/fail)
+	The docker inspect command is used to retrieve detailed information about Docker objects such as containers, images, 
+		networks, and volumes. 
+	'docker inspect <object_name_or_id>'
+	Docker inspect is a powerful and essential command for obtaining in-depth information about Docker objects (containers, 
+	images, volumes, and networks). It's especially useful for debugging, configuration verification, and automation tasks.
+
+
+-------------------
+Uing jinkins homepage, build a custom jenkins conatiners.
+From ubuntu
+apt update
+run install -y jenkins
+
+
+to view history in docker command --> history | grep docker
+---------
+windows --> enter 'shell:startup'
+---------------
+
+list types of volume in dockers
+	-Named Volumes: These are volumes that are managed by Docker and are identified by a specific name.
+				Named volumes are stored in Docker's default volume storage location (usually /var/lib/docker/volumes/).
+	-Anonymous Volumes: These are volumes that are created without a name. Docker automatically creates them when you mount a 
+						volume but don't specify a name.
+	-Bind Mounts: Bind mounts allow you to mount a specific file or directory from the host machine into a container.
+				Unlike volumes, bind mounts can reference locations anywhere on the host filesystem, not just Docker-managed paths.
+	-tmpfs Mounts: A tmpfs mount is a temporary filesystem that is stored in memory.
+		This type of volume is useful when you need temporary storage that doesn't persist across container restarts.
+-----------------
+
+Docker container lifecycle-->
+	1. Create: docker create
+		When you run a container, Docker creates a container instance based on a specified image.
+		The container is created, but it is not yet running. It’s in the "created" state.
+	2. Start
+		Once created, a container can be started. In this stage, the container transitions from "created" to "running."
+	3. Running
+		Once a container is started, it enters the "running" state.
+	4. Stop Command: docker stop
+		You can stop a running container. When you stop a container, Docker sends a SIGTERM signal to the main process of the 
+		container to allow it to terminate gracefully. 
+	5. Pause Command: docker pause
+		Pauses a running container by suspending all its processes. This is different from stopping because the container remains 
+		in memory and retains its state, but it’s not actively running.
+	6. Unpause Command: docker unpause
+			Resumes a paused container.
+	7. Restart Command: docker restart
+		Restarts a container. This is useful when you want to restart the container without fully stopping and recreating it.
+	8. Exit
+		When the main process inside a container finishes executing (either because of success or failure), the container stops and 
+		transitions into the "exited" state.
+	9. Remove Command: docker rm
+		After a container has stopped or exited, you can remove it to free up resources.
+	10. Logs
+		You can view logs of a running or stopped container by using the docker logs command. This is useful for debugging or monitoring 
+			the container's output.
+	11. Inspect
+		Command: docker inspect
+		Provides detailed information about the container, including its configuration, network settings, mount points, and other metadata. 
+			This is useful for troubleshooting or checking a container’s setup.
+-----------------------------------------
+
+What is AWS Cloud Front?
+
+
+-------------
+bind mount vs docker volume
+
+In Docker, both volumes and bind mounts share data between containers and the host machine, but they differ in how they 
+	manage the storage and persistence of that data
+	-Volumes are managed by Docker and offer better portability and backup capabilities, while bind mounts directly
+	use host directories, offering easier access and potential for direct modification, but with less portability. 
+-----------
+
+what is custom volume in dockers
+-> A volume that's explicitly created and managed by Docker, allowing for persistent storage of data outside of the 
+	container's filesystem, and can be mounted into multiple containers. 
+-------------
+How to images in docker?
+-> Scan with Docker CLI 
+	Tools used for scan
+	-Trivy
+	-Grype
+	-Clair
+	-Snyk
+'docker scan quickview <image>
+
+
+------------------
+
+Explain Docker Architecture?
+--> There are three main components:
+	1.Docker Client: The Docker Client is the primary way users interact 
+			with Docker. It’s a command-line tool (docker) that allows you to send instructions to the Docker Daemon.
+	2. Docker Daemon (Server): The Docker Daemon is the core engine of Docker. 
+			It runs in the background and is responsible for managing Docker containers, images, networks, and volumes.
+	It handles:
+		-Container lifecycle (create, run, stop)
+		-Image management
+		-Volume & network management	
+	3. Docker Objects:Docker Objects are the building blocks used to assemble and run your applications inside Docker. These include:
+		(like Images, Containers, Networks, Volumes)
+---------------
+How to troubleshoot Docker Container?
+--> 1. Check Container status for app failure/crash 'docker ps -a'
+	2. View Logs 'docker logs -f <conatiner-id>'   (-f used for real time logs).
+	3. Acces Container Shell 'docker exec it <conatiner id> bash'
+	4. Inspect Container 'docker inspect <contain-id>
+	5. Check for Dockerfiles issue
+	6. Check Resource usage
+------------------
+How to reduce Docker Image Size 
+--> 1. Use Smaller Base images: Like Alpine
+	2. Use Multistage Builds: to avoid bundling.
+	3. Clea up after instaling
+	4. Combine Run Intructions: RUN, CPOY, ADD creates new layers, so avoid.
+	5. Analyze image Size.
+	6. Periodically Rebuild and Clean Old Images.
+-------------
+What is purpose of Multistage Builds in Docker?
+--> MB is used to create smaller, more secure, and more efficient images by separating the build environment.
+	-Reduces Final Image Size
+	-Keep Images Clean and Secure
+	-Simplify Dockerfiles
+	-Enable Reuse
+	-Better For CI/CD pipelines
+-----------------
+What si Docker Client?
+-> Is the primary interface that users interact with to communicate with docker Engine.
+-----------------
+What are Docker File Components?
+--> 1. FROM
+	2. Label
+	3. Workdir
+	4. Copy or ADD
+	5. RUN
+	6. ENV
+	7. EXPOSE
+	8. CMD
+	9. Entrypoint
+	10. Volume
+----------------
+What are difference btw RUN, ENV and CMD?
+--> Run: Purpose: Executes commands in the build process of the Docker image.
+	ENV: Purpose: Sets environment variables in the Docker image.
+	CMD: Purpose: Specifies the default command to run when a container starts from the image.
+	
+
+
+
