@@ -1,0 +1,668 @@
+Vid 1:
+Need Linus server to practice commands.
+
+Linus is a rich platform to develop our servers.
+
+Linus is secured and is a rich platform to develop softwares.
+
+42:10 AWS instances
+  
+  
+commands-
+Basic linus commands:
+
+'r' =read
+'w' = write
+'x' =execute
+'ls' : list files & directories
+'pwd' : present working directory
+'cd' : change directory
+to create empty file: 'touch' file1
+'cd ..' to come of the directory
+'ls dir1' : check file inside directory
+'ls -l' : shows info about the file (created date, time, size)
+'ls -lt' : recent created files shud be displayed at bigining
+'ls -lrt' : recent creates file show at bottom.
+'vi file1' : to edit files
+to insert mode press ESC key and after press 'i' key.
+press esc :wq! and enter  to exit
+'cat' file1' : used to display contet of the file
+esc :q! will exit without saving
+
+
+Vid 2: 
+
+Elastic ip : If using server not charged, if not used then will be charged. 
+username for ubutu: ubuntu
+
+'date' : displays the date
+How to replace string in a file?
+
+esc :%s/linus/windows/g
+
+replace string only in 2nd line- :2s/linus/windows/g
+
+To replace range of lines-
+':2,4s/linus/windows/g'
+
+'$' is used to replace all.
+
+To set line number
+'esc :set nu'
+
+remove line number
+'esc :set nuno'
+
+
+move cursor to particular line
+'esc :3'
+
+To delete particular line 
+'esc dd'
+
+how to search particular string
+'esc :/string'
+
+copy file to another directory	
+'cd file1 temp/temp1/temp2'
+
+copy conetent of file or directories 9if already exist then it will overwrite)
+'cp file file2'
+
+copy file to directory
+'cp file1 temp/temp1/temp2'
+
+'-r' recurssive
+
+'cp -r dir1 temp/temp1/temp2' copy 1 directory to another
+
+Rename file
+'mv file1 file_1'
+
+move file to directory
+'mv file1 to dir1'
+
+move one directory to another
+'mv dir1 temp/temp1/temp2'
+
+Vid 3:
+
+Check file size.
+'du (disk usage)
+'du -sh filename'
+'du -sh *'
+'df (disk free)'  --> to check disk size 
+'df -h' 
+'df -h ,'   to check present disk size
+
+-rw- | rw- |r-- 
+ ↓       ↓     ↓
+owner  group  others
+
+groups: development team
+____________________________________
+
+chmod ---> used for changing permission of a file or directories
+
+'chmod 777 filename' --> full permission for owner, grp or others.
+
+'umask 777'  ---> 	no permission at all
+'umask 000'  -->  full permission
+'umask' ---> is used set default permission on a system.
+--------------------------------------------------------
+rwxr-xr-x    permission should look be like this
+  7  5  5
+
+chmod 755 filename
+-------------------------
+421
+rwx
+--------------------
+
+r-xr----x  
+5  4    1
+
+chmod 541 filename
+-----------------------------
+
+chmod 744 file1 file2 file3  
+
+rwxr--r--
+-----------------------------
+
+chmod -R 777 dir1
+
+-R --> recurssive
+-------------------------------
+
+chmod u+w, g+x, o-w filename
+
+u  --> username
+g -->  group
+g -->  others
+a  --> all
+------------------------------
+id chmod 655 filename
+
+rw-r-xr-x
+
+change permission for multiple files.
+
+chmod 700 file1 test1 test2
+------------------------------
+
+To set default permission of rwxr-xr-- =754 when create new files.
+
+777
+754
+____
+023
+umask 033
+--------------------------------
+defaul permission r-xr--r-- = 544. what imask command should be used.
+
+777
+544
+----
+233
+233 umask
+-----------------------------
+
+ wc --> used for counting number of lines, words or characters.
+  'wc filename'    ->  used to count only lines
+  'wc -w filename'  --> prints only words
+'wc -c filename'   -> counts characters
+
+----------------------------------'
+
+> (redirect)  --> used to store output of commands to file
+
+'ls -lrt > log1'
+
+if file already exists, it will not overwrite content file.
+-------------------------------------------
+>> (append)   --> used to attach output of a command a file 
+
+head -4 filename >> log1 
+
+if file already exists, it will not overwrite content of  a file.
+-----------------------------------------
+tail is used to display last portion of a file.
+'tail -1 filename'  --> last one line
+'tail filename'  --> last 10 lines by default.
+'tail -12 filename' ---> last 12 lines of filename.
+
+---------------------------
+Wget -->wget is a versatile and powerful tool for downloading files or content from the web(HTTP, HTTPS, and FTP servers.)
+'wget http://example.com/file.zip'
+
+---------------------------
+
+'|' (pipe) is used to pass output of one command to next command as input.
+
+'ls -lrt | head -4'
+
+display only 4th line 
+'head -4 file1 | tail -1'
+
+display 99th line a file.
+'head -99 file1 | head -1'
+
+display 2nd last line.
+'tail -2 file1 | head -1'
+
+how do you count number of words in 7th line of a file.
+'head -7 file1 | tail -1 | wc -w'
+
+---------------------
+
+echo "hi"
+
+echo -e "Hi\n how r u"
+--------------------------------
+more is used to display content of file pagwise.
+'more filename'
+ ---------------------------
+ less ---> used to display content of a file pagewise, but u can scroll up and scroll down.
+ 'less filename'
+ 
+----------------------------------
+
+vid 4:
+
+'i' used for case sensitive.
+
+'^'  press(↑ + shift + 6) key. 
+
+'grep' --> grep command is used to search for specific patterns within files. 
+
+grep "pattern" filename
+
+grep -w "word" filename  --> search particular word only
+
+How to serach multiple pattern in file?
+'grep -e "linus" -e "ubuntu" -e "os" file1
+
+or
+
+egrep
+
+Search lines which start with particular string or word.
+
+grep "^w" file1
+
+How to display lines end with "os".
+
+grep "os$" file1
+
+grep -c "linux" test1   --> count number of lines which has that pattern.
+
+how to display which all file have particular patterns.
+
+'grep -R -l "linux" *'
+-----------------------------------
+SED is stream editor. File are edited in output only.
+
+'sed 's/linux/windows/g' file_1'
+
+'sed -i 's/linux/windows/g' file_1'
+
+To replace only second line.
+		`
+'sed '2s/linux/windows/g' file_1'
+
+'sed '2,7s/linux/windows/g' file_1' --> replaces string from 2nd to 7th line.
+
+'sed 's/linux/windows/g' file_1' --> replaces only last line.
+
+'sed '5,$s/linux/windows/g' file_1' --> 5th to last line.
+
+'sed -n '3p' test1'  --> display only 3rd line.
+------------------------------------------------										`````
+How to delete lines..
+
+'sed '2d' test1'
+
+'sed '2,5d' test1'
+
+Print 1st and last lines only.
+
+sed -n '1p;$p' test1'
+-----------------------------------------
+Vid 5:  After wc press 'ctr+c' to come out.
+
+To check username 
+
+'who'
+
+To check hostname
+
+'hostname'
+
+su stands for superuser or switchuser -(used to login as other user.
+
+'su - username'
+
+password-
+-----------------
+
+sudo (superuser does)
+
+sudo --> executes commands with roots permission. used to install softwares without root permission.
+'exit' --> logiuts
+
+'yum' is used to install softwares on redha machine-(only super user can install softwares)
+
+from ec2-user
+
+'sudo useradd ABC --> used to add user.
+
+'sudo passwd ABC'  --> used to set password.
+
+'sudo su -ABC 
+password:
+
+'sudo yum install vim'  --> permission denied.
+Because ABC user does not have sudo pernission.
+------------------------------------
+How to provide sudo permission.
+from ec2-user
+
+'sudo su -' (login as root)
+
+vi /etc/sudoers
+go to last line  of this file .. copy permission for ABC from ec2-user.
+--------------------------------------------------------
+Who all logged into the system.
+'who'
+'whoam1  --> shows user name.
+-----------------------------
+
+
+when user is created he will have root password by default.
+
+To add user
+'sudo useradd ABC'
+
+To set password
+'sudo password ABC'
+
+To login into user
+'su - ABC'
+
+'sudo su -' ---> login as root user from ec2-user.
+-------------------------
+
+'cd /etc/'  --> display all files.
+
+'vi /etc/sudoers'   -->cThe command vi /etc/sudoers is used to open the /etc/sudoers file in the vi editor on a Unix-like
+ system (such as Linux). The /etc/sudoers file defines the rules and permissions for the sudo command, 
+ which allows authorized users to perform administrative tasks (e.g., installing software, changing system settings)
+ with elevated privileges.
+
+'esc:$'  takes to last line.
+
+-------------------------------
+1:08min
+
+Step by step example:
+
+pwd
+sudo useradd abhi 
+sudo passwd abhi
+(enter password)
+su - abhi (login)
+vi /etc/sudo
+exit
+sudo vi /etc/sudoers  (go to last line)
+
+------------------------------------
+
+Cut is used to cut file columnwise.
+
+'cut -d " " -f1 data
+-d  --> delimiter or seperator btw coulumn.
+
+f1  --> 1st field
+f2  --> 2nd field
+---------------------------
+
+awk is used to cut file column wise and row wise.
+but i use here to cut column wise.
+
+awk -F " " '{print $1}' filename
+
+awk -F " " '{print $1, $3}' data
+
+-F --> field seperator.
+
+$1 ---> 1st column
+$2  --> 2nd column
+
+ls -lrt | awk -F " " '{print $6}'
+
+awk -F " " '{print $NF}' data
+
+$NF ---> last column
+
+how to print 2nd last column.
+awk -F " " '{print $(NF-1)}' filename
+
+ls -lrt | awk -F ":" {print $2}'
+
+---------------------------------
+FIND is used to find location of the file.
+
+'find . -name "filename"'
+
+'find . -iname "File1'
+i  --> case sensitive
+
+how to find files which are modified 90 days ago?
+'find . -type f -mtime +90'
+
+how to list non-empty files.
+'find .  -type f -size +0'    ( . is for current direct seraching file)
+
+
+find files which are modified 2 days ago.
+'find . -type f -mtime +2'
+
+find all files which are modified wihtin 2 days.
+'find . -type f -mtime -2'
+
+find all files which are modified wihtin 5 min.
+'find . -type -mmin -5'
+
+-type f --> files only
+-type d --> directories only
+
+'find . -mtime +90'  ---> find both files and directories.
+
+find files which have permissions 777.
+'find . -type f -perm 777'
+
+how do find files which have size over 1mb.
+'find . -type f -size -1M'
+
+
+how do you find empty files.
+'find . -type f -empty'
+
+how do you find non-emty files.
+'find . -type f -nonempty'
+
+Find location of a file only in present directory.
+'find . maxdepth 1 -iname "file1"
+
+-maxdepth 1 --> 1st level directory
+-maxdepth 2 --> 1st and 2nd leve directories
+
+how do delete all empty files.
+'find . -type f -empty | xargs rm'
+--------------------------
+
+xargs  --> used to pass  as arguments
+
+------------------------------------
+Vid 6:
+
+softlink:
+softlink is a shortcut to a file and if you make change in the actual file.
+it will get reflected in the link.
+
+'ln -s actualfilename linkname'
+
+softlink vs hardlink:
+If i delete actual file, softlink will not work.
+but hardlink will work fine, becuase it points to inod of a file.
+
+hardlink:
+'ln actualfilename linkname'
+-----------------
+inod: 
+
+softlinks are used in major scenarios.
+----------------------------
+
+
+--------------------------------------
+du ( disk usage)  --> used to check size of a file.
+
+'du -sh filename'
+
+'du -sh *  --> size of all files in present dir.
+---------------------------------
+
+df (disk free) is used to check size of disk.
+
+df -h
+df +h
+-----------------------------------
+
+ps --> used to check current running processes on system.
+
+'ps -ef'
+
+how to check particular process running or not?
+
+'ps -ef | grep "processname"
+
+kill is used to kill process  --> 'kill -9 PID'
+
+'-9'  --> used to terminate a process.
+
+how do you list all processes started by particular user
+'ps -u username'
+
+
+how do you kill all process by particular name (kill all process with same name).
+'pkill process_name'
+
+(example: To kill all processes named firefox: 'pkill firefox')
+---------------------------------
+'top' --> shows cpu details(which process is using more speed, memory)
+
+top is used to check which process taking high cpu & memory. it shows % of cpu and memory.
+----------------------------------------------------------
+'sudo apt-get update'  for ubuntu
+'sudo m update'  for red hat.
+
+--------------------------------
+'.bashrc' --> Auto execute file which works on system/session startup.
+'vi .bashrc'  --> to create a startup message.
+
+what is .bash_profile and .bashrc  , .bash_history?
+'.bash_profile'  ---> is a hidden script file with custom configurations for a user terminal session.
+'.bash_history'  --->  it refers to the commands, files, and shortcuts that allow you to view, modify,
+                        and delete bash commands that have been run on a system
+--------------------------------------------
+Vid 7:
+ pemp key --> used for connecting one linus server to anoher linus server.
+ ssh --> used for connecting windows to linus server.
+ 
+(40:00) winscp -->  used to copy windows to linus or linus to windows. (download winscp)
+ ------------------------------------------
+
+SCP --> (secure copy)used to copy file from one server to another or used to sync directories. (uses ssh internally)
+
+copy file from one server to another.
+'scp -i pemfile data ec2-user@(server ip):/home/ec2-user/'
+
+copy back from another server to present path,
+'scp -i pemfile -r ec2-user@(server ip):/home/ec2-user/dir1'
+------------------------------------------------
+on the same server,
+'rsync dir1 temp1/temp2/dir1'
+
+btw 2 servers,
+'rsync -i pem dir1 ec2-user@server2:home/ec2-user'
+-----------------------------------
+rsync vs scp.
+while copying data, if copy is btw due to network issue or some other issue.
+If reissue scp command to copy again, it will start copying from begining.
+If use rsync, it will start copying form where it was stopped.
+______________________________________
+
+rsync --> is used to sync server to server.
+	
+rsync temp1 user@servername /home/ec2-user/dir1 tmep1'
+-----------------------------------
+tee --> display output of command on screen as well as write a file.
+tee -a --> display output of command on screen as well as append a file.
+
+head -4 filename | tee -a logname.
+------------------------------------------
+
+Vid 8:
+
+RSA key  --> 
+
+ssh keygen -t rsa
+
+How do you setup passwordless connection btw servers?
+
+ We need to run "ssh-keygen -t rsa" on server1 and generate rsa key.
+Take this public key and copy it to another server to file called authorized_key under .ssh directory. save it.
+
+Next time when you login from server1 to server2, it will be passwordless connection.
+
+step: 
+1. login to server1
+	'ssh-keygen -t rsa'
+	(keep pressing enter key till key get generated)
+ 
+	enter 'cat /home/ec2-user/.ssh/id_rsa.pub'
+	(copy shown key)
+
+2. login to server2
+	'cd .ssh'
+paste the key in file  'vi authorized_keys'
+
+paste key at the end of a file and save it. 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDVVABbt3zvmwTBcZFuRw4lo14rjrA9Glu0J8OZgXbWyR6J7d+0vD05anL3x2YRzwtyyDykDghxn9qwTRYdv6migGEp5NpoXlAG9OjlNw46MqyOolry/Io1d/LUpDGjIDBGeidrMW/cdq49Gs1OSeIQoxxUpXpLXG0CEkUg6J44wsXFNJlrUcyyiRWP5EAGmdAhnOtv3Ami9Ywg2rnzIYJlHeOQazo5nU8TUiooNPA9KdwKde5tycR7YeyR5RQrf/8Yl/E4FKsRXfymMvk+Z/LQ2c/AVefxAEQ6NS6puVTP35T8ofNDo/E40G3ixRvbMd6tDGPL81n7Vgu2MCFlY5+AV2ehdF1BErr+ZnDl3mWr5CgSuGVLQ8k2WQYZaC6A/moxaq4GX1uc5fi8GktgklwdzZgM2dHTPAA9LqJh4LqWrwQnpSB9G9Ls+l1Wb7ItCWuYF8zg+t+PLkrUBpAXfGAxr4muglTr3zF5w7GA/HlFSKF/I2JJ818t4TqBzB+V82U= ubuntu@ip-172-31-0-163
+
+go server1  and run "ssh ec2-user@server2" (check logged in to server2 without password).
+--------------------------------------------------
+ssh uses port 22
+
+telnet  --> used to break firewall. it uses port 33. used to authenticate account credentials on remote server.
+
+telnet uses 23 
+telnet IPaddress or servername
+username: 
+password:
+---------------------------------------
+netstat
+
+How do you check.
+1. busy ports
+2. available ports
+3. all ports.
+4. Which software is using which port.
+------------------------------
+ping IPaddress -icmp protocol
+is used to check whether server is up running.
+------------------\\
+
+'uptime'  --> to check system running time since start.
+
+--------------------------
+sort  filename  --> used to sort data
+'cat filename | sort'
+
+sort -r filename ---> used to sort decending order.
+
+uniq  --> remove duplicates and its used along with sort command.
+
+we never use uniq command alone...(u can use only on sorted data).
+
+
+
+hostname --> name of currenthost 
+
+how to check linux version?
+'uname -v'
+
+'uname -a' --> check all info about linux.
+
+------------------------------------------
+What are linux directories and why we use.
+
+Top
+
+Htop - gives option of overview which progrm consuming more meory
+needs to stop.
+
+etc: is used store system related configurations.
+
+wat is zombie
+wat is orphan
+
+waht is linux booting process and how it works.
+
+ chkconfig httpd on  --> automatically starts the service as soon as instance launch or active.
+
+Server http host:
+
+
